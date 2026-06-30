@@ -23,8 +23,7 @@ try:
     openai.api_key = st.secrets["OPENAI_API_KEY"]
 except (KeyError, FileNotFoundError):
     openai.api_key = os.getenv("OPENAI_API_KEY")
-set_background("assets/borders"
-".jpeg")
+set_background("assets/aesthetic_bg.png")
 
 # --- Custom CSS for attention-grabbing style ---
 st.markdown(
