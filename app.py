@@ -154,10 +154,10 @@ if st.button("✨ Generate AI Caption ✨"):
                 st.markdown("<h3 style='color:#43c6ac;'>🎉 Your AI-generated Caption:</h3>", unsafe_allow_html=True)
                 st.success(caption)
             except openai.error.RateLimitError:
-                st.error("⏳ Oops! Rate limit exceeded ya aapke OpenAI API credits khatam ho gaye hain. Kripya apna OpenAI account check karein ya thodi der baad try karein.")
+                st.error("⏳ High traffic or API limits reached. Please verify your OpenAI billing or try again later.")
             except openai.error.AuthenticationError:
-                st.error("🚨 Authentication Error: Aapki API key invalid hai ya galat hai. Kripya sahi key daalein.")
+                st.error("🚨 Invalid API Key. Please update your API key in the settings.")
             except Exception as e:
-                st.error(f"⚠️ Ek anjaan error aayi. Details: {str(e)}")
+                st.error(f"⚠️ An unexpected error occurred: {str(e)}")
     else:
         st.warning("Please enter a keyword or theme to generate a caption.")
