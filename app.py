@@ -143,16 +143,21 @@ if st.button("✨ Generate AI Caption ✨"):
                 f"Write 2-3 catchy lines, include 6-8 trending hashtags, and 4-5 relevant emojis."
             )
 
-            response = openai.ChatCompletion.create(
-                model="gpt-4o-mini",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=200,
-                temperature=0.9
-            )
-
-            caption = response.choices[0].message["content"].strip()
-
-            st.markdown("<h3 style='color:#43c6ac;'>🎉 Your AI-generated Caption:</h3>", unsafe_allow_html=True)
-            st.success(caption)
+            try:
+                response = openai.ChatCompletion.create(
+                    model="gpt-4o-mini",
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=200,
+                    temperature=0.9
+                )
+                caption = response.choices[0].message["content"].strip()
+                st.markdown("<h3 style='color:#43c6ac;'>🎉 Your AI-generated Caption:</h3>", unsafe_allow_html=True)
+                st.success(caption)
+            except openai.error.RateLimitError:
+                st.error("⏳ Oops! Rate limit exceeded ya aapke OpenAI API credits khatam ho gaye hain. Kripya apna OpenAI account check karein ya thodi der baad try karein.")
+            except openai.error.AuthenticationError:
+                st.error("🚨 Authentication Error: Aapki API key invalid hai ya galat hai. Kripya sahi key daalein.")
+            except Exception as e:
+                st.error(f"⚠️ Ek anjaan error aayi. Details: {str(e)}")
     else:
         st.warning("Please enter a keyword or theme to generate a caption.")
