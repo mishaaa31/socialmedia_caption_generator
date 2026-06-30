@@ -3,7 +3,7 @@ import base64
 import openai
 import os
 from dotenv import load_dotenv
-from googletrans import Translator
+from dotenv import load_dotenv
 load_dotenv()
 def set_background(image_path):
     with open(image_path, "rb") as image_file:
@@ -134,7 +134,7 @@ if st.button("✨ Generate AI Caption ✨"):
     if keyword:
         with st.spinner("Generating your viral caption..."):
             prompt = (
-                f"You are a viral {platform} content creator. Create a {sentiment} post about '{keyword}'. "
+                f"You are a viral {platform} content creator. Create a {sentiment} post about '{keyword}' in {language} language. "
                 f"Write 2-3 catchy lines, include 6-8 trending hashtags, and 4-5 relevant emojis."
             )
 
@@ -146,11 +146,6 @@ if st.button("✨ Generate AI Caption ✨"):
             )
 
             caption = response.choices[0].message["content"].strip()
-
-            if language != "English":
-                translator = Translator()
-                lang_code = "hi" if language == "Hindi" else "en"
-                caption = translator.translate(caption, dest=lang_code).text
 
             st.markdown("<h3 style='color:#43c6ac;'>🎉 Your AI-generated Caption:</h3>", unsafe_allow_html=True)
             st.success(caption)
