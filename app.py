@@ -19,8 +19,10 @@ def set_background(image_path):
         """,
         unsafe_allow_html=True
     )
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
+try:
+    openai.api_key = st.secrets["OPENAI_API_KEY"]
+except (KeyError, FileNotFoundError):
+    openai.api_key = os.getenv("OPENAI_API_KEY")
 set_background("assets/borders"
 ".jpeg")
 
@@ -133,6 +135,10 @@ st.markdown("<hr style='border:1px dashed #ff5858;'>", unsafe_allow_html=True)
 if st.button("✨ Generate AI Caption ✨"):
     if keyword:
         with st.spinner("Generating your viral caption..."):
+            if not openai.api_key:
+                st.error("🚨 OpenAI API Key is missing! Please add it to Streamlit Secrets (Settings -> Secrets) or in your .env file.")
+                st.stop()
+                
             prompt = (
                 f"You are a viral {platform} content creator. Create a {sentiment} post about '{keyword}' in {language} language. "
                 f"Write 2-3 catchy lines, include 6-8 trending hashtags, and 4-5 relevant emojis."
